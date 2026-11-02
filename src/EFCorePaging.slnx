@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/Solution Items/">
+    <File Path="../assets/efcorepaginglogo.png" />
     <File Path="../README.md" />
   </Folder>
   <Project Path="EFCorePaging.Common/EFCorePaging.Common.csproj" Id="d01d7778-e543-4a4c-8486-0e0dfb7c8baf" />
