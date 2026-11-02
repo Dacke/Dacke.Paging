@@ -35,7 +35,7 @@ jobs:
         echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
     - name: Restore dependencies
-      run: dotnet restore ./src/EFCorePaging.sln
+      run: dotnet restore ./src/EFCorePaging.slnx
 
     - name: Build & Package (Release)
       run: |
@@ -44,7 +44,7 @@ jobs:
           PKG_VERSION="1.0.0-preview"
         fi
         
-        dotnet build ./src/EFCorePaging.sln \
+        dotnet build ./src/EFCorePaging.slnx \
           --configuration Release \
           --no-restore \
           /p:PackageVersion=$PKG_VERSION
