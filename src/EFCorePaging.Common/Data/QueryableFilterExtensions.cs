@@ -1,6 +1,7 @@
 ﻿using EFCorePaging.Common.Enums;
 using EFCorePaging.Common.Filtering;
 using System.Collections.Concurrent;
+using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -66,12 +67,13 @@ public static class QueryableFilterExtensions {
 
         object? convertedVal;
         try {
-            if (targetType == typeof(Guid))
-                convertedVal = Guid.Parse(rule.Value);
-            else if (targetType.IsEnum)
-                convertedVal = Enum.Parse(targetType, rule.Value, ignoreCase: true);
-            else
-                convertedVal = Convert.ChangeType(rule.Value, targetType);
+            convertedVal = targetType switch {
+                var t when t == typeof(Guid) => Guid.Parse(rule.Value),
+                var t when t == typeof(DateTime) => DateTime.Parse(rule.Value),
+                var t when t == typeof(DateTimeOffset) => DateTimeOffset.Parse(rule.Value),
+                var t when t.IsEnum => Enum.Parse(t, rule.Value, ignoreCase: true),
+                _ => TypeDescriptor.GetConverter(targetType).ConvertFromInvariantString(rule.Value)
+            };
         }
         catch {
             return null;
