@@ -3,10 +3,7 @@
 namespace EFCorePaging.Common.Sorting;
 
 public static class SortParser {
-    public static List<(string PropertyName, SortDirection Direction)> ParseSortColumns(
-        string? sortBy,
-        SortDirection defaultDirection = SortDirection.Ascending,
-        string defaultColumn = "LastName") {
+    public static List<(string PropertyName, SortDirection Direction)> ParseSortColumns(string? sortBy, SortDirection defaultDirection = SortDirection.Ascending, string defaultColumn = "LastName") {
         var result = new List<(string PropertyName, SortDirection Direction)>();
 
         if (string.IsNullOrWhiteSpace(sortBy)) {
@@ -21,17 +18,13 @@ public static class SortParser {
             var parts = segment.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
             string propName = parts[0];
 
-            SortDirection direction = defaultDirection;
-
-            // Check if direction is explicitly defined in the segment
-            if (parts.Length > 1) {
-                if (parts[1].Equals("DESC", StringComparison.OrdinalIgnoreCase)) {
-                    direction = SortDirection.Descending;
+            SortDirection direction = parts.Length > 1
+                ? parts[1].ToUpperInvariant() switch {
+                    "ASC" or "ASCENDING" => SortDirection.Ascending,
+                    "DESC" or "DESCENDING" => SortDirection.Descending,
+                    _ => defaultDirection
                 }
-                else if (parts[1].Equals("ASC", StringComparison.OrdinalIgnoreCase)) {
-                    direction = SortDirection.Ascending;
-                }
-            }
+                : defaultDirection;
 
             result.Add((propName, direction));
         }
