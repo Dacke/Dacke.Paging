@@ -1,5 +1,5 @@
-﻿using EFCorePaging.Common.Enums;
-using EFCorePaging.Cursor.Enums;
+﻿using EFCorePaging.Cursor.Enums;
+using Paging.Common.Enums;
 using System.Collections.Concurrent;
 using System.Linq.Expressions;
 using System.Reflection;

@@ -3,9 +3,10 @@
     <File Path="../assets/efcorepaginglogo.png" />
     <File Path="../README.md" />
   </Folder>
-  <Project Path="EFCorePaging.Common/EFCorePaging.Common.csproj" Id="d01d7778-e543-4a4c-8486-0e0dfb7c8baf" />
+  <Project Path="DapperPaging.Offset/DapperPaging.Offset.csproj" />
   <Project Path="EFCorePaging.Cursor/EFCorePaging.Cursor.csproj" Id="b9d37866-022e-485a-a932-5e4086ab2abd" />
   <Project Path="EFCorePaging.Offset/EFCorePaging.Offset.csproj" Id="d8f8f5a9-0a3f-46fc-8d67-cfcca36e8711" />
-  <Project Path="EFCorePaging.Sample.Web/EFCorePaging.Sample.Web.csproj" />
-  <Project Path="EFCorePaging.UnitTests/EFCorePaging.UnitTests.csproj" Id="ac7e1999-092e-4cc2-ade1-e73552f54ddc" />
+  <Project Path="Paging.Common/Paging.Common.csproj" />
+  <Project Path="Paging.Sample.Web/Paging.Sample.Web.csproj" />
+  <Project Path="Paging.UnitTests/Paging.UnitTests.csproj" />
 </Solution>

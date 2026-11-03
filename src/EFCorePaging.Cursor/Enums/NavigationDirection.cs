@@ -1,5 +1,4 @@
-﻿using EFCorePaging.Common.Enums;
-using EFCorePaging.Common.Enums.Converters;
+﻿using Paging.Common.Enums.Converters;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 

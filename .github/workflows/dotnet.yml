@@ -25,4 +25,4 @@ jobs:
     - name: Build
       run: dotnet build ./src/EFCorePaging.slnx --no-restore
     - name: Test
-      run: dotnet test ./src/EFCorePaging.UnitTests/EFCorePaging.UnitTests.csproj --no-build --verbosity normal
+      run: dotnet test ./src/Paging.UnitTests/Paging.UnitTests.csproj --no-build --verbosity normal
