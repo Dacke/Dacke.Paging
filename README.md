@@ -1,6 +1,6 @@
-# Entity Framework Core & FastEndpoints Pagination Prototype
+# Entity Framework Core, Dapper & FastEndpoints Pagination
 
-This repository serves as a prototype exploring different database pagination strategies within a .NET Web API built using **FastEndpoints**, **Mapster**, and **Entity Framework Core**. 
+This repository contains different database pagination strategies within a .NET Web API built using **FastEndpoints**, **Mapster**, **Entity Framework Core**, and **Dapper**. 
 
 When building RESTful APIs that query database tables with large datasets, choosing the right pagination technique is critical for balancing query performance, server resource usage, and front-end UI compatibility.
 
@@ -8,7 +8,7 @@ When building RESTful APIs that query database tables with large datasets, choos
 
 ## Pagination Strategies Comparison
 
-This prototype compares two primary methods for server-side pagination: **Offset-Based Pagination (`Skip` / `Take`)** and **Cursor-Based Pagination (Keyset)**.
+This project compares two primary methods for server-side pagination: **Offset-Based Pagination (`Skip` / `Take`)** and **Cursor-Based Pagination (Keyset)**.
 
 ### 1. Offset-Based Pagination (`Skip` / `Take`)
 
@@ -68,7 +68,7 @@ var items = await db.People
 
 ### Selected Strategy: **Offset-Based (`Skip` / `Take`) Pagination**
 
-For this prototype, **Offset-Based (`Skip` / `Take`) Pagination** was selected as the standard implementation.
+For this project, **Offset-Based (`Skip` / `Take`) Pagination** was selected as the standard implementation.
 
 #### Justification
 Modern front-end component suites such as **PrimeNG** (Angular) and **Kendo UI** rely on lazy-loading table structures that send explicit positional offset state (e.g., `first: 40, rows: 20`, or `skip: 40, take: 20`). These UI controls explicitly allow end-users to:
