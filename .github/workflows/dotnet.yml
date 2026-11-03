@@ -21,8 +21,8 @@ jobs:
       with:
         dotnet-version: 10.0.x
     - name: Restore dependencies
-      run: dotnet restore ./src/EFCorePaging.slnx
+      run: dotnet restore ./src/Dacke.Paging.slnx
     - name: Build
-      run: dotnet build ./src/EFCorePaging.slnx --no-restore
+      run: dotnet build ./src/Dacke.Paging.slnx --no-restore
     - name: Test
-      run: dotnet test ./src/Paging.UnitTests/Paging.UnitTests.csproj --no-build --verbosity normal
+      run: dotnet test ./src/Dacke.Paging.UnitTests/Dacke.Paging.UnitTests.csproj --no-build --verbosity normal
