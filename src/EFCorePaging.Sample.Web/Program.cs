@@ -30,7 +30,6 @@ app
     .UseDefaultExceptionHandler()
     .UseFastEndpoints(config => {
         config.Endpoints.RoutePrefix = "api";
-        //config.Errors.UseProblemDetails() //  Site Config
         config.Errors.UseProblemDetails(cfg => {
             cfg.AllowDuplicateErrors = true;
             cfg.IndicateErrorCode = true;
