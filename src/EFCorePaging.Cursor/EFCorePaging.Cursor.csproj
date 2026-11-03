@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Title>Entity Framework Core Cursor Paging</Title>
     <PackageIcon>efcorepaginglogo.png</PackageIcon>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EFCorePaging.Common\EFCorePaging.Common.csproj" />
+    <ProjectReference Include="..\Paging.Common\Paging.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

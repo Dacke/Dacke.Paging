@@ -1,6 +1,6 @@
-﻿using EFCorePaging.Common.Enums;
-using EFCorePaging.Common.Filtering;
-using EFCorePaging.Cursor.Enums;
+﻿using EFCorePaging.Cursor.Enums;
+using Paging.Common.Enums;
+using Paging.Common.Filtering;
 
 namespace EFCorePaging.Cursor;
 

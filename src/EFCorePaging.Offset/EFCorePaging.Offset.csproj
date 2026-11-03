@@ -7,7 +7,7 @@
     <Title>Entity Framework Core Offset Paging</Title>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Description>Offset pagination relies on numerical page offsets. The client requests a specific window of data by sending the number of records to skip (`Skip` / `First`) and the number of records to fetch (`Take` / `PageSize`).</Description>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/Dacke/EFCorePaging</RepositoryUrl>
     <PackageIcon>efcorepaginglogo.png</PackageIcon>
@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EFCorePaging.Common\EFCorePaging.Common.csproj" />
+    <ProjectReference Include="..\Paging.Common\Paging.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

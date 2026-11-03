@@ -1,4 +1,4 @@
-﻿using EFCorePaging.Common.Enums;
+﻿using Paging.Common.Enums;
 using System.Collections.Concurrent;
 using System.Linq.Expressions;
 using System.Reflection;
