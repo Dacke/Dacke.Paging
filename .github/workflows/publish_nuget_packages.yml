@@ -50,7 +50,7 @@ jobs:
           /p:PackageVersion=$PKG_VERSION
 
     - name: Run Unit Tests
-      run: dotnet test ./src/EFCorePaging.UnitTests/EFCorePaging.UnitTests.csproj --configuration Release --no-build --verbosity normal
+      run: dotnet test ./src/Paging.UnitTests/Paging.UnitTests.csproj --configuration Release --no-build --verbosity normal
 
     - name: NuGet Login (OIDC)
       if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
