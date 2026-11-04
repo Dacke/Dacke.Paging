@@ -1,8 +1,9 @@
+using Dacke.EFCorePaging.Cursor.Builders;
 using Dacke.Paging.Sample.Web.Data;
+using Dacke.Paging.Sample.Web.Mappings;
 using FastEndpoints;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
-using Dacke.Paging.Sample.Web.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,7 @@ builder.Services.AddDbContext<ITestDataContext, TestDataContext>((serviceProvide
 });
 builder.Services.AddScoped<ITestDataContextFactory, TestDataContextFactory>();
 builder.Services.AddSingleton<IDbConnectionFactory, SqlServerConnectionFactory>();
+builder.Services.AddScoped<ICursorPagedResponseBuilder, CursorPagedResponseBuilder>();
 builder.Services.AddSingleton<IRegister>(provider => {
     return new MappingConfig();
 });
