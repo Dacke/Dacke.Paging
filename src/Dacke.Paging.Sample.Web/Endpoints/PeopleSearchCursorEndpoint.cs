@@ -1,6 +1,7 @@
 ﻿using Dacke.EFCorePaging.Cursor;
 using Dacke.EFCorePaging.Cursor.Data;
 using Dacke.EFCorePaging.Cursor.Enums;
+using Dacke.EFCorePaging.Cursor.Extensions;
 using Dacke.EFCorePaging.Cursor.Helpers;
 using Dacke.Paging.Common.Enums;
 using Dacke.Paging.Common.Sorting;
@@ -11,6 +12,7 @@ using FastEndpoints;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Concurrent;
+using System.Linq.Expressions;
 using System.Reflection;
 
 public class PeopleSearchCursorEndpoint : Endpoint<PagedRequest, PagedResponse<PersonDto>> {
@@ -28,25 +30,18 @@ public class PeopleSearchCursorEndpoint : Endpoint<PagedRequest, PagedResponse<P
 
     public override async Task HandleAsync(PagedRequest req, CancellationToken ct) {
         using var db = dbContextFactory.CreateDbContext();
-
-        ArgumentException.ThrowIfNullOrWhiteSpace(PagingMetadata.DefaultSortColumn);
-        ArgumentException.ThrowIfNullOrWhiteSpace(PagingMetadata.EntityKeyColumn);
-
-        int pageSize = req.PageSize is < 1 or > 100 ? 20 : req.PageSize;
-        var cursor = CursorHelper.DecodeCursor<KeysetCursor>(req.Cursor);
-        var sortColumns = SortParser.ParseSortColumns(req.SortBy, req.DefaultSortDirection, defaultColumn: PagingMetadata.DefaultSortColumn);
-
-        var pagingContext = new PagingContext(pageSize, cursor, sortColumns, PagingMetadata.EntityKeyColumn, req.NavigationDirection);
+                
+        var pagingContext = req.BuildPagingContext(PagingMetadata);
 
         var results = await db.People
             .AsNoTracking()
-            .ApplyKeysetPaging(pagingContext.Cursor, pagingContext.SortColumns, pagingContext.PrimaryKeyColumn, pagingContext.NavigationDirection)
+            .ApplyKeysetPaging(pagingContext)
             .Take(pagingContext.PageSize + 1)
             .ProjectToType<PersonDto>()
             .ToListAsync(ct);
 
         bool isBackward = req.NavigationDirection == NavigationDirection.Backward;
-        bool hasBoundaryMatch = results.Count > pageSize;
+        bool hasBoundaryMatch = results.Count > req.PageSize;
 
         if (hasBoundaryMatch)
             results.RemoveAt(results.Count - 1);
@@ -54,11 +49,11 @@ public class PeopleSearchCursorEndpoint : Endpoint<PagedRequest, PagedResponse<P
         if (isBackward)
             results = [.. Enumerable.Reverse(results)];
 
-        bool hasMore = isBackward ? (cursor != null) : hasBoundaryMatch;
-        bool hasPrevious = isBackward ? hasBoundaryMatch : (cursor != null);
+        bool hasMore = isBackward ? (pagingContext.Cursor != null) : hasBoundaryMatch;
+        bool hasPrevious = isBackward ? hasBoundaryMatch : (pagingContext.Cursor != null);
 
-        string? nextCursor = BuildCursorForBoundary(hasMore, sortColumns, results, isLastItem: true);
-        string? previousCursor = BuildCursorForBoundary(hasPrevious, sortColumns, results, isLastItem: false);
+        string? nextCursor = BuildCursorForBoundary(hasMore, pagingContext.SortColumns, results, isLastItem: true);
+        string? previousCursor = BuildCursorForBoundary(hasPrevious, pagingContext.SortColumns, results, isLastItem: false);
         
         var response = new PagedResponse<PersonDto>(results, nextCursor, previousCursor, hasMore, hasPrevious);
 
