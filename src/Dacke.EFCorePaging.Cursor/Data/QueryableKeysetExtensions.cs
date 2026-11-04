@@ -12,20 +12,20 @@ public static class QueryableKeysetExtensions {
     private static readonly MethodInfo StringCompareToMethod = typeof(string).GetMethod(nameof(string.CompareTo), [typeof(string)])!;
     private static readonly MethodInfo GuidCompareToMethod = typeof(Guid).GetMethod(nameof(Guid.CompareTo), [typeof(Guid)])!;
 
-    public static IQueryable<T> ApplyKeysetPaging<T>(this IQueryable<T> query, KeysetCursor? cursor, List<(string PropertyName, SortDirection Direction)> sortColumns, string primaryKeyName, NavigationDirection navDirection = NavigationDirection.Forward) {
-        bool isBackward = navDirection == NavigationDirection.Backward;
+    public static IQueryable<T> ApplyKeysetPaging<T>(this IQueryable<T> query, PagingContext pagingContext) {
+        bool isBackward = pagingContext.NavigationDirection == NavigationDirection.Backward;
 
         // Invert directions when navigating backward to seek top-bound items
         var effectiveSorts = isBackward
-            ? sortColumns.Select(s => (s.PropertyName, Direction: InvertDirection(s.Direction))).ToList()
-            : sortColumns.ToList();
+            ? pagingContext.SortColumns.Select(s => (s.PropertyName, Direction: InvertDirection(s.Direction))).ToList()
+            : pagingContext.SortColumns.ToList();
 
         // 1. Build Dynamic Ordering
-        query = ApplyOrdering(query, effectiveSorts, primaryKeyName);
+        query = ApplyOrdering(query, effectiveSorts, pagingContext.PrimaryKeyColumn);
 
         // 2. Build Dynamic Keyset Predicate if cursor is provided
-        if (cursor != null && cursor.SortValues.Count > 0) {
-            var predicate = BuildKeysetPredicate<T>(cursor, effectiveSorts, primaryKeyName);
+        if (pagingContext.Cursor != null && pagingContext.Cursor.SortValues.Count > 0) {
+            var predicate = BuildKeysetPredicate<T>(pagingContext.Cursor, effectiveSorts, pagingContext.PrimaryKeyColumn);
             if (predicate != null)
                 query = query.Where(predicate);
         }
