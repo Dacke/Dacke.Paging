@@ -1,4 +1,4 @@
-using Dacke.EFCorePaging.Cursor.Builders;
+using Dacke.Paging.Common.Builders;
 using Dacke.Paging.Sample.Web.Data;
 using Dacke.Paging.Sample.Web.Mappings;
 using FastEndpoints;

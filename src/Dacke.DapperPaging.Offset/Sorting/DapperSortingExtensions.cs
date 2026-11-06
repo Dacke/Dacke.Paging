@@ -1,13 +1,14 @@
 ﻿using Dacke.Paging.Common.Enums;
+using Dacke.Paging.Common.Interfaces;
 
-namespace Dacke.DapperPaging.Offset.Data;
+namespace Dacke.DapperPaging.Offset.Sorting;
 
 public static class DapperSortingExtensions {
     /// <summary>
     /// Builds a SQL ORDER BY clause from sorting parameters, respecting individual column directions 
     /// and falling back to the default sort direction when no direction is specified.
     /// </summary>
-    public static string BuildSqlSorting(this PagedRequest request, Dictionary<string, string>? propertyMap = null) {
+    public static string BuildSqlSorting(this ISortableRequest request, Dictionary<string, string>? propertyMap = null) {
         if (string.IsNullOrWhiteSpace(request.SortBy) == true)
             return string.Empty;
 

@@ -3,6 +3,7 @@
     <File Path="../assets/efcorepaginglogo.png" />
     <File Path="../README.md" />
   </Folder>
+  <Project Path="Dacke.DapperPaging.Cursor/Dacke.DapperPaging.Cursor.csproj" Id="05d34d54-630f-4420-bd6d-3772b1b561a0" />
   <Project Path="Dacke.DapperPaging.Offset/Dacke.DapperPaging.Offset.csproj" />
   <Project Path="Dacke.EFCorePaging.Cursor/Dacke.EFCorePaging.Cursor.csproj" Id="b9d37866-022e-485a-a932-5e4086ab2abd" />
   <Project Path="Dacke.EFCorePaging.Offset/Dacke.EFCorePaging.Offset.csproj" Id="d8f8f5a9-0a3f-46fc-8d67-cfcca36e8711" />

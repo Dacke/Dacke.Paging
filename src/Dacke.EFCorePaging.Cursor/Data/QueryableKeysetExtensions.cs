@@ -1,4 +1,4 @@
-﻿using Dacke.EFCorePaging.Cursor.Enums;
+﻿using Dacke.Paging.Common.Cursor;
 using Dacke.Paging.Common.Enums;
 using System.Collections.Concurrent;
 using System.Linq.Expressions;

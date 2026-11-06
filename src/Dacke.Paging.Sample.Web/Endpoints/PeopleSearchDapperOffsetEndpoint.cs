@@ -1,6 +1,6 @@
 ﻿using Dacke.DapperPaging.Offset;
-using Dacke.DapperPaging.Offset.Data;
 using Dacke.DapperPaging.Offset.Filtering;
+using Dacke.DapperPaging.Offset.Sorting;
 using Dacke.Paging.Sample.Web.Data;
 using Dacke.Paging.Sample.Web.Data.Models;
 using Dacke.Paging.Sample.Web.Dtos;
@@ -14,7 +14,7 @@ public class PeopleSearchDapperOffsetEndpoint : Endpoint<PagedRequest, PagedResp
 
     public PeopleSearchDapperOffsetEndpoint(IDbConnectionFactory dbConnectionFactory) => this.dbConnectionFactory = dbConnectionFactory;
 
-    public override void Configure() => Post("people/search/dapper");
+    public override void Configure() => Post("people/search/dapper/offset");
 
     public override async Task HandleAsync(PagedRequest req, CancellationToken ct) {
         using var connection = dbConnectionFactory.CreateConnection();

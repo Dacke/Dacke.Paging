@@ -1,7 +1,7 @@
 ﻿using AwesomeAssertions;
-using Dacke.DapperPaging.Offset.Data;
 using Dacke.Paging.Common.Enums;
 using Dacke.DapperPaging.Offset;
+using Dacke.DapperPaging.Offset.Sorting;
 
 namespace Dacke.Paging.UnitTests.Data;
 

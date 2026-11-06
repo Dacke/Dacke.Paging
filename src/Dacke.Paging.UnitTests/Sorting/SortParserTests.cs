@@ -15,7 +15,7 @@ public class SortParserTests {
             // (Provided via InlineData parameters)
 
             // When
-            var result = SortParser.ParseSortColumns(sortBy);
+            var result = SortParser.ParseSortColumns(sortBy, defaultColumn: "LastName");
 
             // Then
             result.Should().ContainSingle()

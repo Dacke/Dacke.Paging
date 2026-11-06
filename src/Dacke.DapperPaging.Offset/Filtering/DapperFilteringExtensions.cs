@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Dacke.Paging.Common.Enums;
 using System.Text;
+using Dacke.Paging.Common.Interfaces;
 
 namespace Dacke.DapperPaging.Offset.Filtering; 
 
@@ -9,7 +10,7 @@ public static class DapperFilteringExtensions {
     /// Applies filtering from a PagedRequest containing a list of FilterRequests with Constraints and Operators 
     /// to generate a SQL WHERE clause and Dapper DynamicParameters.
     /// </summary>
-    public static (string WhereClause, DynamicParameters Parameters) BuildSqlWhere(this PagedRequest request) {
+    public static (string WhereClause, DynamicParameters Parameters) BuildSqlWhere(this IFilterableRequest request) {
         var parameters = new DynamicParameters();
         if (request?.Filters == null || request.Filters.Count == 0)
             return (string.Empty, parameters);

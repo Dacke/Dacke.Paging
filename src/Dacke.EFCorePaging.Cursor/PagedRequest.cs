@@ -1,10 +1,10 @@
-﻿using Dacke.EFCorePaging.Cursor.Enums;
-using Dacke.Paging.Common.Enums;
+﻿using Dacke.Paging.Common.Enums;
 using Dacke.Paging.Common.Filtering;
+using Dacke.Paging.Common.Interfaces;
 
 namespace Dacke.EFCorePaging.Cursor;
 
-public class PagedRequest {
+public class PagedRequest : ICursorRequest, ISortableRequest, IFilterableRequest {
     /// <summary>
     /// Opaque Base64 string containing encoded KeysetCursor JSON metadata.
     /// Null for the initial page request.
