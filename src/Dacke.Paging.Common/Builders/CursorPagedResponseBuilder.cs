@@ -1,18 +1,22 @@
-﻿using Dacke.EFCorePaging.Cursor.Enums;
-using Dacke.EFCorePaging.Cursor.Helpers;
+﻿using Dacke.Paging.Common.Cursor;
+using Dacke.Paging.Common.Enums;
+using Dacke.Paging.Common.Helpers;
+using Dacke.Paging.Common.Interfaces;
 using System.Collections.Concurrent;
 using System.Reflection;
 
-namespace Dacke.EFCorePaging.Cursor.Builders;
+namespace Dacke.Paging.Common.Builders;
 
 public interface ICursorPagedResponseBuilder {
-    PagedResponse<TResult> BuildResponse<TResult>(List<TResult> results, PagingContext pagingContext, PagingMetadata metadata);
+    TResponse BuildResponse<TResponse, TResult>(List<TResult> results, PagingContext pagingContext, PagingMetadata metadata) 
+        where TResponse : ICursorResponse<TResult>, new();
 }
 
 public class CursorPagedResponseBuilder : ICursorPagedResponseBuilder {
     private static readonly ConcurrentDictionary<(Type Type, string PropertyName), PropertyInfo?> PropertyCache = new();
 
-    public PagedResponse<TResult> BuildResponse<TResult>(List<TResult> results, PagingContext pagingContext, PagingMetadata metadata) {
+    public TResponse BuildResponse<TResponse, TResult>(List<TResult> results, PagingContext pagingContext, PagingMetadata metadata) 
+        where TResponse : ICursorResponse<TResult>, new() {
         bool isBackward = pagingContext.NavigationDirection == NavigationDirection.Backward;
         bool hasBoundaryMatch = results.Count > pagingContext.PageSize;
 
@@ -28,7 +32,13 @@ public class CursorPagedResponseBuilder : ICursorPagedResponseBuilder {
         string? nextCursor = BuildCursorForBoundary(hasMore, pagingContext, metadata, results, isLastItem: true);
         string? previousCursor = BuildCursorForBoundary(hasPrevious, pagingContext, metadata, results, isLastItem: false);
 
-        return new PagedResponse<TResult>(results, nextCursor, previousCursor, hasMore, hasPrevious);
+        return new TResponse { 
+            Values = [.. results],
+            NextCursor = nextCursor,
+            PreviousCursor = previousCursor,
+            HasMore = hasMore,
+            HasPrevious = hasPrevious,
+        };
     }
 
 

@@ -1,4 +1,4 @@
-﻿namespace Dacke.EFCorePaging.Cursor;
+﻿namespace Dacke.Paging.Common.Cursor;
 
 public record PagingMetadata(string DefaultSortColumn, string EntityKeyColumn, string DtoKeyColumn) { 
     public void Validate() {

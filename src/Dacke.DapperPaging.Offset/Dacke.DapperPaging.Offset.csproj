@@ -6,12 +6,13 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Dacke's Dapper Offset Paging</Title>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <Description>High-performance Dapper extension methods for offset-based pagination (Skip/Take), sorting, and SQL parameterization.</Description>
     <PackageIcon>dapperpaginglogo.png</PackageIcon>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
-    <RepositoryUrl>https://github.com/Dacke/EFCorePaging</RepositoryUrl>
+    <RepositoryUrl>https://github.com/Dacke/Dacke.Paging</RepositoryUrl>
     <PackageId>$(AssemblyName)</PackageId>
+    <PackageTags>Dapper, Paging, Offset</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

@@ -3,10 +3,13 @@
 namespace Dacke.Paging.Common.Sorting;
 
 public static class SortParser {
-    public static List<(string PropertyName, SortDirection Direction)> ParseSortColumns(string? sortBy, SortDirection defaultDirection = SortDirection.Ascending, string defaultColumn = "LastName") {
+    public static List<(string PropertyName, SortDirection Direction)> ParseSortColumns(string? sortBy, SortDirection defaultDirection = SortDirection.Ascending, string? defaultColumn = null) {
         var result = new List<(string PropertyName, SortDirection Direction)>();
 
         if (string.IsNullOrWhiteSpace(sortBy)) {
+            if (string.IsNullOrWhiteSpace(defaultColumn))
+                return result;
+
             result.Add((defaultColumn, defaultDirection));
             return result;
         }

@@ -8,12 +8,12 @@ using FastEndpoints;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 
-public class PeopleSearchOffsetEndpoint : Endpoint<PeopleSearchRequest, PagedResponse<PersonDto>> {
+public class PeopleSearchEfCoreOffsetEndpoint : Endpoint<PeopleSearchRequest, PagedResponse<PersonDto>> {
     private readonly ITestDataContextFactory dbContextFactory;
 
-    public PeopleSearchOffsetEndpoint(ITestDataContextFactory dbContextFactory) => this.dbContextFactory = dbContextFactory;
+    public PeopleSearchEfCoreOffsetEndpoint(ITestDataContextFactory dbContextFactory) => this.dbContextFactory = dbContextFactory;
         
-    public override void Configure() => Post("people/search/offset");
+    public override void Configure() => Post("people/search/efcore/offset");
 
     public override async Task HandleAsync(PeopleSearchRequest req, CancellationToken ct) {
         using var db = dbContextFactory.CreateDbContext();
