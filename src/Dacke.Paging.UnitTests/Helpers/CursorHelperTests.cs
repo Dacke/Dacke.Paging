@@ -1,5 +1,5 @@
 ﻿using AwesomeAssertions;
-using Dacke.EFCorePaging.Cursor.Helpers;
+using Dacke.Paging.Common.Helpers;
 using System.Text;
 
 namespace Dacke.Paging.UnitTests.Helpers;

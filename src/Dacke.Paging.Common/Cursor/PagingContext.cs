@@ -1,7 +1,6 @@
-﻿using Dacke.EFCorePaging.Cursor.Enums;
-using Dacke.Paging.Common.Enums;
+﻿using Dacke.Paging.Common.Enums;
 
-namespace Dacke.EFCorePaging.Cursor;
+namespace Dacke.Paging.Common.Cursor;
 
 public record PagingContext(
     int PageSize,

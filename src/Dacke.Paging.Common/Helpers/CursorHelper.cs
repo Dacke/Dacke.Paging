@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
 
-namespace Dacke.EFCorePaging.Cursor.Helpers;
+namespace Dacke.Paging.Common.Helpers;
 
 public static class CursorHelper {
     private static readonly JsonSerializerOptions JsonOptions = new() { PropertyNameCaseInsensitive = true };

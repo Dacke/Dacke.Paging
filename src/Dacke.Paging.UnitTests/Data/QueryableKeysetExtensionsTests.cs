@@ -1,8 +1,7 @@
 ﻿using AwesomeAssertions;
 using Dacke.EFCorePaging.Cursor.Data;
-using Dacke.EFCorePaging.Cursor.Enums;
+using Dacke.Paging.Common.Cursor;
 using Dacke.Paging.Common.Enums;
-using Dacke.EFCorePaging.Cursor;
 
 namespace Dacke.Paging.UnitTests.Data;
 
@@ -22,9 +21,10 @@ public class QueryableKeysetExtensionsTests {
             // Given
             List<(string, SortDirection)> sortColumns = [("Age", SortDirection.Ascending)];
             string primaryKeyName = "Id";
+            var context = new PagingContext(10, null, sortColumns, primaryKeyName, NavigationDirection.Forward);
 
             // When
-            var result = TestData.ApplyKeysetPaging(null, sortColumns, primaryKeyName, NavigationDirection.Forward).ToList();
+            var result = TestData.ApplyKeysetPaging(context).ToList();
 
             // Then
             result.Should().HaveCount(4);
@@ -43,9 +43,10 @@ public class QueryableKeysetExtensionsTests {
                 SortValues = new Dictionary<string, string?> { { "Age", "30" } }
             };
             List<(string, SortDirection)> sortColumns = [("Age", SortDirection.Ascending)];
+            var context = new PagingContext(20, cursor, sortColumns, "Id");
 
             // When
-            var result = TestData.ApplyKeysetPaging(cursor, sortColumns, "Id", NavigationDirection.Forward).ToList();
+            var result = TestData.ApplyKeysetPaging(context).ToList();
 
             // Then
             // Items after Bob (Age 30, Id 2) in ascending order should be Charlie (Age 30, Id 3) and Diana (Age 45, Id 4)
@@ -69,9 +70,10 @@ public class QueryableKeysetExtensionsTests {
                 ("Age", SortDirection.Ascending),
                 ("Name", SortDirection.Ascending)
             ];
+            var context = new PagingContext(20, cursor, sortColumns, "Id");
 
             // When
-            var result = TestData.ApplyKeysetPaging(cursor, sortColumns, "Id", NavigationDirection.Forward).ToList();
+            var result = TestData.ApplyKeysetPaging(context).ToList();
 
             // Then
             // Following Bob (Age 30, Name "Bob Jones"): Charlie Brown (Age 30, Name "Charlie Brown") and Diana Prince (Age 45)
@@ -91,9 +93,10 @@ public class QueryableKeysetExtensionsTests {
                 SortValues = new Dictionary<string, string?> { { "Age", "30" } }
             };
             List<(string, SortDirection)> sortColumns = [("Age", SortDirection.Ascending)];
+            var context = new PagingContext(20, cursor, sortColumns, "Id", NavigationDirection.Backward);
 
             // When
-            var result = TestData.ApplyKeysetPaging(cursor, sortColumns, "Id", NavigationDirection.Backward).ToList();
+            var result = TestData.ApplyKeysetPaging(context).ToList();
 
             // Then
             // Going backwards from Charlie (Age 30, Id 3) should yield items before it: Bob (Age 30, Id 2) and Alice (Age 22, Id 1)
@@ -108,9 +111,10 @@ public class QueryableKeysetExtensionsTests {
             // Given
             var cursor = new KeysetCursor { PrimaryKeyName = "Id", PrimaryKeyValue = "1" };
             List<(string, SortDirection)> sortColumns = [("NonExistentColumn", SortDirection.Ascending)];
+            var context = new PagingContext(20, cursor, sortColumns, "Id");
 
             // When
-            var action = () => TestData.ApplyKeysetPaging(cursor, sortColumns, "Id", NavigationDirection.Forward).ToList();
+            var action = () => TestData.ApplyKeysetPaging(context).ToList();
 
             // Then
             action.Should().Throw<ArgumentException>()
@@ -128,9 +132,10 @@ public class QueryableKeysetExtensionsTests {
                 SortValues = new Dictionary<string, string?> { { "Name", "Bob Jones" } }
             };
             List<(string, SortDirection)> sortColumns = [("Name", SortDirection.Ascending)];
+            var context = new PagingContext(20, cursor, sortColumns, "Id");
 
             // When
-            var result = TestData.ApplyKeysetPaging(cursor, sortColumns, "Id", NavigationDirection.Forward).ToList();
+            var result = TestData.ApplyKeysetPaging(context).ToList();
 
             // Then
             result.Should().HaveCount(2);
@@ -147,9 +152,10 @@ public class QueryableKeysetExtensionsTests {
                 SortValues = new Dictionary<string, string?> { { "UniqueId", "22222222-2222-2222-2222-222222222222" } }
             };
             List<(string, SortDirection)> sortColumns = [("UniqueId", SortDirection.Ascending)];
+            var context = new PagingContext(20, cursor, sortColumns, "Id");
 
             // When
-            var result = TestData.ApplyKeysetPaging(cursor, sortColumns, "Id", NavigationDirection.Forward).ToList();
+            var result = TestData.ApplyKeysetPaging(context).ToList();
 
             // Then
             result.Should().HaveCount(2);
@@ -168,10 +174,11 @@ public class QueryableKeysetExtensionsTests {
                 SortValues = new Dictionary<string, string?> { { "Age", "30" } }
             };
             List<(string, SortDirection)> sortColumns = [("Age", SortDirection.Ascending)];
+            var context = new PagingContext(20, cursor, sortColumns, "Id");
 
             // When
             // This exercises the fallback that checks if primaryKeyName is in sortColumns and appends it
-            var action = () => TestData.ApplyKeysetPaging(cursor, sortColumns, "Id", NavigationDirection.Forward).ToList();
+            var action = () => TestData.ApplyKeysetPaging(context).ToList();
 
             // Then
             action.Should().NotThrow();
@@ -218,9 +225,10 @@ public class QueryableKeysetExtensionsTests {
                 SortValues = new Dictionary<string, string?> { { "UniqueId", "not-a-valid-guid-string" } }
             };
             List<(string, SortDirection)> sortColumns = [("UniqueId", SortDirection.Ascending)];
+            var context = new PagingContext(20, cursor, sortColumns, "Id");
 
             // When
-            var action = () => TestData.ApplyKeysetPaging(cursor, sortColumns, "Id", NavigationDirection.Forward).ToList();
+            var action = () => TestData.ApplyKeysetPaging(context).ToList();
 
             // Then
             action.Should().Throw<FormatException>(); // Guid.Parse fails on malformed input

@@ -6,7 +6,7 @@ using Dacke.Paging.Common.Filtering;
 
 namespace Dacke.Paging.UnitTests.Filtering;
 
-public class DapperFilteringExtensionsTests {
+public class DapperOffsetFilteringExtensionsTests {
     [Fact]
     public void BuildSqlWhere_WithNullOrEmptyFilters_ReturnsEmptyClauseAndNoParameters() {
         // Arrange

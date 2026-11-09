@@ -1,9 +1,10 @@
 ﻿using Dacke.Paging.Common.Enums;
 using Dacke.Paging.Common.Filtering;
+using Dacke.Paging.Common.Interfaces;
 
 namespace Dacke.EFCorePaging.Offset;
 
-public class PagedRequest {
+public class PagedRequest : ISortableRequest, IFilterableRequest {
     /// <summary>
     /// Number of records to skip
     /// </summary>
@@ -29,8 +30,6 @@ public class PagedRequest {
     /// <remarks>asc or desc</remarks>
     public virtual SortDirection DefaultSortDirection { get; set; } = SortDirection.Ascending;
 
-    #region Filter Configuration
-
     /// <summary>
     /// Specifies how multiple global filters are combined.
     /// </summary>
@@ -40,6 +39,4 @@ public class PagedRequest {
     /// Collection of filters to apply to the requested data.
     /// </summary>
     public List<FilterRequest> Filters { get; set; } = [];
-
-    #endregion
 }

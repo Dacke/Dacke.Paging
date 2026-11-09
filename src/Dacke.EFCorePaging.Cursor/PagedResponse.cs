@@ -1,6 +1,8 @@
-﻿namespace Dacke.EFCorePaging.Cursor;
+﻿using Dacke.Paging.Common.Interfaces;
 
-public class PagedResponse<T> {
+namespace Dacke.EFCorePaging.Cursor;
+
+public class PagedResponse<T> : ICursorResponse<T> {
     /// <summary>
     /// The records for the current page that match the filter criteria.
     /// </summary>

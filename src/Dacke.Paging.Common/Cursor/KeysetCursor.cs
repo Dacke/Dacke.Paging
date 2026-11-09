@@ -1,4 +1,4 @@
-﻿namespace Dacke.EFCorePaging.Cursor;
+﻿namespace Dacke.Paging.Common.Cursor;
 
 public class KeysetCursor {
     public Dictionary<string, string?> SortValues { get; set; } = new();

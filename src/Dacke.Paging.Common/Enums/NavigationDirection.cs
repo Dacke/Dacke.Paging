@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace Dacke.EFCorePaging.Cursor.Enums;
+namespace Dacke.Paging.Common.Enums;
 
 [JsonConverter(typeof(EnumMemberJsonConverter<NavigationDirection>))]
 public enum NavigationDirection {

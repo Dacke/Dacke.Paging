@@ -5,12 +5,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <Title>Dacke's Entity Framework Core Cursor Paging</Title>
     <PackageIcon>efcorepaginglogo.png</PackageIcon>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <Description>Cursor pagination relies on unique record pointers rather than numerical offsets. The client requests a specific window of data by sending an opaque reference token (`Cursor` / `After`) representing the boundary of the last seen record, alongside the number of records to fetch (`Take` / `PageSize`).</Description>
     <PackageTags>Entity Framework, EFCore, Paging, Cursor</PackageTags>
+    <RepositoryUrl>https://github.com/Dacke/Dacke.Paging</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
