@@ -24,7 +24,7 @@ public class PeopleSearchDapperOffsetEndpoint : Endpoint<PagedRequest, PagedResp
         };
 
         var (whereClause, parameters) = req.BuildSqlWhere();
-        var orderByClause = req.BuildSqlSorting(propertyMap);
+        var orderByClause = req.BuildSqlSorting(nameof(Person.PersonId), propertyMap);
 
         // Add pagination parameters
         parameters.Add("Skip", req.Skip);

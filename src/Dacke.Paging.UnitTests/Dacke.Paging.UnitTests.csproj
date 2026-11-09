@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Dacke.DapperPaging.Cursor\Dacke.DapperPaging.Cursor.csproj" />
     <ProjectReference Include="..\Dacke.DapperPaging.Offset\Dacke.DapperPaging.Offset.csproj" />
     <ProjectReference Include="..\Dacke.EFCorePaging.Cursor\Dacke.EFCorePaging.Cursor.csproj" />
     <ProjectReference Include="..\Dacke.EFCorePaging.Offset\Dacke.EFCorePaging.Offset.csproj" />

@@ -26,3 +26,5 @@ jobs:
       run: dotnet build ./src/Dacke.Paging.slnx --no-restore
     - name: Test
       run: dotnet test ./src/Dacke.Paging.UnitTests/Dacke.Paging.UnitTests.csproj --no-build --verbosity normal
+    - name: Test Endpoints
+      run: dotnet test ./src/Dacke.Paging.Sample.Web.Tests/Dacke.Paging.Sample.Web.Tests.csproj --no-build --verbosity normal

@@ -52,6 +52,9 @@ jobs:
     - name: Run Unit Tests
       run: dotnet test ./src/Dacke.Paging.UnitTests/Dacke.Paging.UnitTests.csproj --configuration Release --no-build --verbosity normal
 
+    - name: Test Endpoints
+      run: dotnet test ./src/Dacke.Paging.Sample.Web.Tests/Dacke.Paging.Sample.Web.Tests.csproj --configuration Release --no-build --verbosity normal
+
     - name: NuGet Login (OIDC)
       if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
       uses: NuGet/login@v1

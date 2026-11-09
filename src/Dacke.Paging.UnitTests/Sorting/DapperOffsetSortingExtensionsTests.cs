@@ -3,19 +3,19 @@ using Dacke.Paging.Common.Enums;
 using Dacke.DapperPaging.Offset;
 using Dacke.DapperPaging.Offset.Sorting;
 
-namespace Dacke.Paging.UnitTests.Data;
+namespace Dacke.Paging.UnitTests.Sorting;
 
-public class DapperSortingExtensionsTests {
+public class DapperOffsetSortingExtensionsTests {
     [Fact]
     public void BuildSqlSorting_WithNullOrWhitespaceSortBy_ReturnsEmptyString() {
         // Arrange
         var request = new PagedRequest { SortBy = null! };
 
         // Act
-        var result = request.BuildSqlSorting();
+        var result = request.BuildSqlSorting("PersonId");
 
         // Assert
-        result.Should().Be(string.Empty);
+        result.Should().Be("ORDER BY [PersonId]");
     }
 
     [Fact]
@@ -27,7 +27,7 @@ public class DapperSortingExtensionsTests {
         };
 
         // Act
-        var result = request.BuildSqlSorting();
+        var result = request.BuildSqlSorting("PersonId");
 
         // Assert
         result.Should().Be("ORDER BY FirstName ASC");
@@ -42,7 +42,7 @@ public class DapperSortingExtensionsTests {
         };
 
         // Act
-        var result = request.BuildSqlSorting();
+        var result = request.BuildSqlSorting("PersonId");
 
         // Assert
         result.Should().Be("ORDER BY Age DESC");
@@ -57,7 +57,7 @@ public class DapperSortingExtensionsTests {
         };
 
         // Act
-        var result = request.BuildSqlSorting();
+        var result = request.BuildSqlSorting("PersonId");
 
         // Assert
         result.Should().Be("ORDER BY CreatedAt DESC");
@@ -72,7 +72,7 @@ public class DapperSortingExtensionsTests {
         };
 
         // Act
-        var result = request.BuildSqlSorting();
+        var result = request.BuildSqlSorting("PersonId");
 
         // Assert
         result.Should().Be("ORDER BY LastName ASC, CreatedAt DESC, Age ASC");
@@ -93,7 +93,7 @@ public class DapperSortingExtensionsTests {
             };
 
         // Act
-        var result = request.BuildSqlSorting(propertyMap);
+        var result = request.BuildSqlSorting("PersonId", propertyMap);
 
         // Assert
         result.Should().Be("ORDER BY PersonId DESC, LastName ASC");
@@ -113,7 +113,7 @@ public class DapperSortingExtensionsTests {
             };
 
         // Act
-        var result = request.BuildSqlSorting(propertyMap);
+        var result = request.BuildSqlSorting("PersonId", propertyMap);
 
         // Assert
         result.Should().Be("ORDER BY UnmappedField DESC");
@@ -127,10 +127,10 @@ public class DapperSortingExtensionsTests {
         var request = new PagedRequest { SortBy = sortBy };
 
         // Act
-        var result = request.BuildSqlSorting();
+        var result = request.BuildSqlSorting("PersonId");
 
         // Assert
-        result.Should().Be(string.Empty);
+        result.Should().Be("ORDER BY [PersonId]");
     }
 
     [Fact]
@@ -147,7 +147,7 @@ public class DapperSortingExtensionsTests {
         };
 
         // Act
-        var result = request.BuildSqlSorting(propertyMap);
+        var result = request.BuildSqlSorting("PersonId", propertyMap);
 
         // Assert
         result.Should().Be("ORDER BY PersonId DESC, Name ASC");
@@ -162,7 +162,7 @@ public class DapperSortingExtensionsTests {
         };
 
         // Act
-        var result = request.BuildSqlSorting();
+        var result = request.BuildSqlSorting("PersonId");
 
         // Assert
         result.Should().Be("ORDER BY FirstName ASC, Age DESC");

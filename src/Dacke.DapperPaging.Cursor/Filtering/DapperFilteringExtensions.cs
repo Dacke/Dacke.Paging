@@ -34,8 +34,13 @@ public static class DapperCursorFilteringExtensions {
                     if (string.IsNullOrWhiteSpace(stringValue) == true && constraint.MatchMode != MatchMode.Equals)
                         continue;
 
+                    // Resolve mapping from propertyMap so "Id" correctly translates to "PersonId"
+                    var propName = constraint.PropertyName;
+                    if (propertyMap != null && propertyMap.TryGetValue(propName, out var mappedName))
+                        propName = mappedName;
+
                     var paramName = $"@p_filter_{paramIndex++}";
-                    var condition = BuildCondition(constraint.PropertyName, constraint.MatchMode, paramName, stringValue, constraint.Value, parameters);
+                    var condition = BuildCondition(propName, constraint.MatchMode, paramName, stringValue, constraint.Value, parameters);
 
                     if (string.IsNullOrEmpty(condition) == false)
                         constraintConditions.Add(condition);
@@ -85,8 +90,17 @@ public static class DapperCursorFilteringExtensions {
             }
 
 
+            // Pre-build parameter names and add parameters
+            var parameterMap = new List<string>();
             for (int columnIndex = 0; columnIndex < allColumns.Count; columnIndex++) {
-                var (propName, direction, val) = allColumns[columnIndex];
+                var (_, _, val) = allColumns[columnIndex];
+                var paramName = $"@p_cursor_val_{paramIndex++}";
+                parameters.Add(paramName, val);
+                parameterMap.Add(paramName);
+            }
+
+            for (int columnIndex = 0; columnIndex < allColumns.Count; columnIndex++) {
+                var (propName, direction, _) = allColumns[columnIndex];
                 var dbColumnName = propertyMap.TryGetValue(propName, out var mapped)
                     ? mapped
                     : propName;
@@ -95,24 +109,22 @@ public static class DapperCursorFilteringExtensions {
 
                 bool descending = direction == SortDirection.Descending;
                 string op = isBackward ? descending ? ">" : "<" : descending ? "<" : ">";
-                
+
                 var subConditions = new List<string>();
                 // Equality checks for all preceding columns
                 for (int idx = 0; idx < columnIndex; idx++) {
-                    var (prevProp, _, prevVal) = allColumns[idx];
+                    var (prevProp, _, _) = allColumns[idx];
                     var prevDbCol = propertyMap.TryGetValue(prevProp, out var prevMapped)
                         ? prevMapped
                         : prevProp;
                     var safePrevCol = $"[{prevDbCol.Replace(";", "").Replace("'", "")}]";
 
-                    var paramName = $"@p_cursor_eq_{paramIndex++}";
-                    parameters.Add(paramName, prevVal);
+                    var paramName = parameterMap[idx];
                     subConditions.Add($"{safePrevCol} = {paramName}");
                 }
 
                 // Inequality check for the current column
-                var currParamName = $"@p_cursor_val_{paramIndex++}";
-                parameters.Add(currParamName, val);
+                var currParamName = parameterMap[columnIndex];
                 subConditions.Add($"{safeCol} {op} {currParamName}");
 
                 if (subConditions.Count == 1)
@@ -160,7 +172,7 @@ public static class DapperCursorFilteringExtensions {
                 return $"{safeColumn} LIKE {paramName}";
 
             case MatchMode.EndsWith:
-                parameters.Add(paramName, $"{stringValue}");
+                parameters.Add(paramName, $"%{stringValue}");
                 return $"{safeColumn} LIKE {paramName}";
 
             case MatchMode.LessThan:

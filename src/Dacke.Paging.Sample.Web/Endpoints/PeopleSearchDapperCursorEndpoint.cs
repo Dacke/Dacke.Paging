@@ -1,10 +1,8 @@
 ﻿using Dacke.DapperPaging.Cursor;
 using Dacke.DapperPaging.Cursor.Filtering;
 using Dacke.DapperPaging.Cursor.Sorting;
-using Dacke.DapperPaging.Offset.Sorting;
 using Dacke.Paging.Common.Builders;
 using Dacke.Paging.Common.Cursor;
-using Dacke.Paging.Common.Enums;
 using Dacke.Paging.Common.Extensions;
 using Dacke.Paging.Sample.Web.Data;
 using Dacke.Paging.Sample.Web.Data.Models;
