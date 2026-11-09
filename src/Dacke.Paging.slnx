@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/Solution Items/">
     <File Path="../assets/efcorepaginglogo.png" />
+    <File Path="../global.json" />
     <File Path="../README.md" />
   </Folder>
   <Project Path="Dacke.DapperPaging.Cursor/Dacke.DapperPaging.Cursor.csproj" Id="05d34d54-630f-4420-bd6d-3772b1b561a0" />
